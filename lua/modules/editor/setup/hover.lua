@@ -67,30 +67,34 @@ M.keys = {
    {
       'K',
       function()
-         require('hover').hover()
+         local winid = require('ufo').peekFoldedLinesUnderCursor()
+         if not winid then
+            vim.lsp.buf.hover()
+            require('hover').hover()
+         end
       end,
-      desc = 'hover.nvim',
+      desc = '[hover/ufo] hover / peak fold',
    },
    {
       'gK',
       function()
          require('hover').hover_select()
       end,
-      desc = 'hover.nvim (select)',
+      desc = '[hover] select hover',
    },
    {
       '<C-p>',
       function()
          require('hover').hover_switch('previous')
       end,
-      desc = 'hover.nvim (previous source)',
+      desc = '[hover] previous source',
    },
    {
       '<C-n>',
       function()
          require('hover').hover_switch('next')
       end,
-      desc = 'hover.nvim (next source)',
+      desc = '[hover] next source',
    },
 }
 

@@ -40,11 +40,11 @@
 -  [x] Bootstrap
    -  [x] Add function to create git-hooks
    -  [x] Add function to download pre-compiled treesitter parsers
--  [ ] LSP
+-  [x] LSP
    -  [x] Show line diagnostics key-mapping
-   -  [ ] Group line diagnostics virtual text
-   -  [ ] Migrate from `typescript.nvim` and `tsserver` to `ts_ls` 
-   -  [ ] Fix navic not attaching with `cssls`
+   -  [x] Group line diagnostics virtual text
+   -  [x] Migrate from `typescript.nvim` and `tsserver` to `ts_ls` 
+   -  [x] Fix navic not attaching with `cssls`
 -  [ ] Configure
    -  [ ] nvim-dap
 -  [ ] Add

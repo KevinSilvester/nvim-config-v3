@@ -263,12 +263,15 @@ return {
    },
 
    -- colour picker
-   { 'nvchad/volt', lazy = true },
+   { 'NvChad/volt', lazy = true },
    {
-      'nvchad/minty',
+      'NvChad/minty',
       -- dir = '/home/kevin/projects/minty',
       lazy = true,
    },
+
+   -- show keys
+   { 'NvChad/showkeys', cmd = { 'ShowkeysToggle' }, opts = { position = 'top-center' } },
 
    -- misc
    {
