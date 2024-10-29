@@ -13,7 +13,7 @@ vim.opt_local.tabstop = 3
 local wk = require('which-key')
 local m = require('core.mapper')
 
-wk.add({ p = { name = '+package-info' } }, { prefix = '<leader>' })
+wk.add({ { '<leader>p', group = 'package-info' } })
 
 -- stylua: ignore
 m.buf_nmap(vim.api.nvim_get_current_buf(), {
@@ -31,12 +31,12 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufLeave' }, {
    callback = function(args)
       if args.event == 'BufEnter' then
          log:debug('ftplugin.json', 'Setting <leader>p mappings', true)
-         wk.add({ p = { name = '+package-info' } }, { prefix = '<leader>' })
+         wk.add({ { '<leader>p', group = 'package-info' } })
       end
 
       if args.event == 'BufLeave' then
          log:debug('ftplugin.json', 'Clearing <leader>p mappings', true)
-         wk.add({ p = { name = '' } }, { prefix = '<leader>' })
+         wk.add({ { '<leader>p', group = '' } })
       end
    end,
 })

@@ -5,9 +5,11 @@ end
 local wk = require('which-key')
 local m = require('core.mapper')
 
-wk.add({ p = { name = '+crates' } }, { prefix = '<leader>' })
-wk.add({ o = { name = '+open' } }, { prefix = '<leader>p' })
-wk.add({ s = { name = '+show' } }, { prefix = '<leader>p' })
+wk.add({
+   { '<leader>p', group = 'crates' },
+   { '<leader>po', group = 'open' },
+   { '<leader>ps', group = 'show' },
+})
 
 
 -- stylua: ignore
@@ -33,16 +35,20 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufLeave' }, {
    callback = function(args)
       if args.event == 'BufEnter' then
          log:debug('ftplugin.toml', 'Setting <leader>p mappings', true)
-         wk.add({ p = { name = '+crates' } }, { prefix = '<leader>' })
-         wk.add({ o = { name = '+open' } }, { prefix = '<leader>p' })
-         wk.add({ s = { name = '+show' } }, { prefix = '<leader>p' })
+         wk.add({
+            { '<leader>p', group = 'crates' },
+            { '<leader>po', group = 'open' },
+            { '<leader>ps', group = 'show' },
+         })
       end
 
       if args.event == 'BufLeave' then
          log:debug('ftplugin.toml', 'Clearing <leader>p mappings', true)
-         wk.add({ p = { name = '' } }, { prefix = '<leader>' })
-         wk.add({ o = { name = '' } }, { prefix = '<leader>p' })
-         wk.add({ s = { name = '' } }, { prefix = '<leader>p' })
+         wk.add({
+            { '<leader>', group = '' },
+            { '<leader>po', group = '' },
+            { '<leader>ps', group = '' },
+         })
       end
    end,
 })
