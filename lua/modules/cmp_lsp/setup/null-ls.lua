@@ -72,6 +72,7 @@ M.config = function()
       debug = false,
       sources = {
          null_ls.builtins.formatting.prettier,
+         null_ls.builtins.formatting.biome,
          -- null_ls.builtins.formatting.black.with({ extra_args = { '--fast' } }),
          -- null_ls.builtins.formatting.autopep8,
          -- null_ls.builtins.formatting.yapf,
@@ -80,6 +81,7 @@ M.config = function()
          -- null_ls.builtins.formatting.google_java_format,
          -- null_ls.builtins.formatting.blade_formatter,
          null_ls.builtins.formatting.sql_formatter,
+         null_ls.builtins.formatting.csharpier,
          -- null_ls.builtins.formatting.clang_format,
          -- null_ls.builtins.formatting.cmake_format,
          -- null_ls.builtins.formatting.rustfmt, -- deprecated

@@ -16,6 +16,8 @@ return {
          'folke/neodev.nvim',
          'folke/neoconf.nvim',
          'SmiteshP/nvim-navic',
+         'Hoffs/omnisharp-extended-lsp.nvim',
+         'antosha417/nvim-lsp-file-operations',
       },
       init = require('modules.cmp_lsp.setup.nvim-lspconfig').init,
       config = require('modules.cmp_lsp.setup.nvim-lspconfig').config,
@@ -42,6 +44,10 @@ return {
          ensure_installed = DEFAULT_LSP_SERVERS,
          automatic_installation = true,
       },
+   },
+   {
+      'antosha417/nvim-lsp-file-operations',
+      config = true,
    },
    {
       -- 'nvimdev/lspsaga.nvim',

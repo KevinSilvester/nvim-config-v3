@@ -44,6 +44,11 @@ M.custom = {
       on_attach = M.default.on_attach,
       settings = require('modules.cmp_lsp.lsp.servers.lua_ls').settings,
    },
+   omnisharp = {
+      capabilities = M.default.capabilities,
+      on_attach = M.default.on_attach,
+      handlers = require('modules.cmp_lsp.lsp.servers.omnisharp').handlers,
+   },
    tailwindcss = {
       capabilities = require('modules.cmp_lsp.lsp.servers.tailwindcss').capabilities,
       init_options = require('modules.cmp_lsp.lsp.servers.tailwindcss').init_options,
