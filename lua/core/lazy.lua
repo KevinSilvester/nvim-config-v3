@@ -1,5 +1,15 @@
 local ufs = require('utils.fs')
 
+local function host_name()
+   if HOST.is_win then
+      return 'win'
+   elseif HOST.is_linux then
+      return 'linux'
+   elseif HOST.is_mac then
+      return 'mac'
+   end
+end
+
 ---@class Core.Lazy
 ---@field root string
 ---@field lazypath string
@@ -11,12 +21,9 @@ Lazy.__index = Lazy
 ---Initialise Lazy
 ---@private
 function Lazy:init()
+   local host = host_name()
    local lazy_root = ufs.path_join(PATH.data, 'lazy')
-   local lazy_lockfile = ufs.path_join(PATH.config, 'lazy-lock.personal.json')
-
-   if HOST.is_mac then
-      lazy_lockfile = ufs.path_join(PATH.config, 'lazy-lock.work.json')
-   end
+   local lazy_lockfile = ufs.path_join(PATH.config, 'lazy-lock.' .. host .. '.json')
 
    local lazy = setmetatable({
       root = lazy_root,
