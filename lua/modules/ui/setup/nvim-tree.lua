@@ -156,7 +156,6 @@ M.config = function(_, opts)
    end
 
    require('nvim-tree').setup(opts)
-   vim.api.nvim_set_hl(0, 'NvimTreeGitDirtyIcon', { link = 'NvimTreeGitDirty' })
 end
 
 -- stylua: ignore

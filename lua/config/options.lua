@@ -8,7 +8,7 @@ vim.opt.laststatus = 3               -- always show status line and only on the 
 vim.opt.fileformats = 'unix,mac,dos' -- use unix EOL format
 vim.opt.title = true
 vim.opt.showmode = false             -- don't show the current mode
-vim.opt.clipboard = 'unnamed'    -- allow neovim to access system clipboard
+vim.opt.clipboard = 'unnamed'        -- allow neovim to access system clipboard
 vim.opt.cursorline = true            -- highlight the current line
 vim.opt.mouse = 'a'
 vim.opt.termguicolors = true
@@ -16,7 +16,7 @@ vim.opt.virtualedit = 'block'
 vim.opt.encoding = 'utf-8'
 vim.opt.viewoptions = 'folds,cursor,curdir,slash,unix'
 vim.opt.wildignore =
-'.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**'
+'.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**'
 vim.opt.runtimepath:append(PATH.data .. '/ts-parsers')
 vim.opt.spell = true
 vim.opt.spelllang = { 'en_gb' }
@@ -29,6 +29,7 @@ vim.opt.relativenumber = true
 vim.opt.number = true
 vim.opt.numberwidth = 4
 vim.opt.ruler = true
+-- vim.opt.statuscolumn = '%{%v:lua.require("modules.ui.statuscolumn").build_stc()%}'
 
 
 -----------------
@@ -104,14 +105,13 @@ vim.opt.shortmess:append('Ic')
 vim.opt.iskeyword:append('-')
 vim.opt.smartcase = true
 vim.opt.formatoptions = '1jcroql'
-vim.opt.wrap = true
+vim.opt.wrap = false
 vim.opt.linebreak = true
-vim.opt.foldcolumn = '0'
+vim.opt.foldcolumn = '1'
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
-vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldenable = true
 vim.opt.equalalways = false
 vim.opt.display = 'lastline'
@@ -135,12 +135,18 @@ vim.opt.pumheight = 10
 vim.opt.helpheight = 20
 vim.opt.previewheight = 12
 vim.opt.showcmd = false
-vim.opt.signcolumn = 'yes'              -- always show the sign column, otherwise it would shift the text each time
-vim.opt.conceallevel = 0                -- so that `` is visible in mardkown files
-vim.opt.fillchars:append({ eob = ' ' }) -- hide '~' at the end of the buffer
+vim.opt.signcolumn = 'yes' -- always show the sign column, otherwise it would shift the text each time
+vim.opt.conceallevel = 0   -- so that `` is visible in mardkown files
+vim.opt.fillchars = {
+   eob = ' ',
+   fold = ' ',
+   foldopen = '',
+   foldclose = '',
+   foldsep = ' ', -- or '│' to use bar for show fold area
+}
 vim.opt.guicursor = 'n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor'
 vim.opt.cmdwinheight = 5
-vim.opt.showbreak = '↳  '
+-- vim.opt.showbreak = ' '
 vim.opt.listchars = 'tab:»·,nbsp:+,trail:·,extends:→,precedes:←'
 vim.opt.pumblend = 10
 vim.opt.winblend = 10
@@ -172,4 +178,9 @@ end
 ----------------
 -- File Types --
 ----------------
-vim.filetype.add({ filename = { ['.swcrc'] = 'json' } })
+vim.filetype.add({
+   filename = {
+      ['.swcrc'] = 'json',
+      ['.luacheckrc'] = 'text',
+   }
+})

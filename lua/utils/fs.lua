@@ -156,6 +156,14 @@ M.read_file = function(path, mode, offset)
    end
 end
 
+---Delete a file
+---@param path string file path
+M.unlink_file = function(path)
+   uv.fs_unlink(path, function(err)
+      assert(not err, err)
+   end)
+end
+
 ---Copy a file or directory
 ---@param src string source path
 ---@param dest string destination path
