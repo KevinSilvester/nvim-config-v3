@@ -159,5 +159,28 @@ function Logger:dump(lines)
    end)
 end
 
+---Clear the log file
+---@arg force? boolean force clear the log file without prompt
+function Logger:clear(force)
+   if force then
+      ufs.write_file(self._logfile, '', 'w')
+      return
+   end
+
+   vim.ui.select(vim.tbl_keys({ NO = 'NO', YES = 'YES' }), {
+      prompt = 'Confirm to clear log file?',
+      format_item = function(item)
+         return item
+      end,
+   }, function(choice)
+      if not choice then
+         return
+      end
+      if choice == 'YES' then
+         ufs.write_file(self._logfile, '', 'w')
+      end
+   end)
+end
+
 local logger_ = Logger:init()
 return logger_

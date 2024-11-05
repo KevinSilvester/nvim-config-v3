@@ -87,6 +87,19 @@ end, {
    end,
 })
 
+vim.api.nvim_create_user_command('LogClear', function(opts)
+   log:clear(opts.bang)
+end, { nargs = 0, bang = true })
+
+
+vim.api.nvim_create_user_command('LogDump', function()
+   log:dump()
+end, { nargs = 0 })
+
+vim.api.nvim_create_user_command('StatusCol', function()
+   require('modules.ui.setup.statuscol').config()
+end, { nargs = 0 })
+
 vim.api.nvim_create_user_command('Ibr', function()
    vim.cmd('IBLDisable')
    vim.cmd('IBLEnable')
