@@ -22,6 +22,7 @@ function BufCache:init()
          -- 'help',
          'netrw',
          'NvimTree',
+         'neo-tree',
          'mason',
          'lazy',
          'toggleterm',

@@ -8,6 +8,7 @@ M.opts = {
       'fugitive',
       'alpha',
       'NvimTree',
+      'neo-tree',
       'lazy',
       'neogitstatus',
       'Trouble',

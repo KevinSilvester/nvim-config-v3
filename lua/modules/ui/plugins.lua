@@ -102,6 +102,7 @@ return {
    {
       'luukvbaal/statuscol.nvim',
       config = require('modules.ui.setup.statuscol').config,
+      event = 'BufEnter'
    },
 
    -- notifications
@@ -144,7 +145,7 @@ return {
       'NvChad/nvim-colorizer.lua',
       event = 'VeryLazy',
       opts = {
-         filetypes = { '*', '!NvimTree', '!lazy', '!toggleterm', '!alpha', '!mason' },
+         filetypes = { '*', '!NvimTree', '!neo-tree', '!lazy', '!toggleterm', '!alpha', '!mason' },
          mode = 'background',
          css = true,
          names = false,
@@ -193,6 +194,19 @@ return {
       opts = require('modules.ui.setup.nvim-tree').opts,
       config = require('modules.ui.setup.nvim-tree').config,
       keys = require('modules.ui.setup.nvim-tree').keys,
+   },
+   {
+      'nvim-neo-tree/neo-tree.nvim',
+      enabled = true,
+      branch = 'v3.x',
+      dependencies = {
+         'nvim-lua/plenary.nvim',
+         'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+         'MunifTanjim/nui.nvim',
+         -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+      },
+      opts = require('modules.ui.setup.neo-tree').opts,
+      config = require('modules.ui.setup.neo-tree').config,
    },
 
    -- cure-border
