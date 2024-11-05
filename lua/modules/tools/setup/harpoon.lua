@@ -1,5 +1,5 @@
 local m = require('core.mapper')
-local uv = vim.version().minor >= 10 and vim.uv or vim.loop
+local uv = vim.uv
 local M = {}
 
 M.config = function()

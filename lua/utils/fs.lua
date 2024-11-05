@@ -1,5 +1,5 @@
 local M = {}
-local fn, uv = vim.fn, (vim.version().minor >= 10 and vim.uv or vim.loop)
+local fn, uv = vim.fn, vim.uv
 
 --- File mode constants for `libuv`'s unix fs operations
 M.FILE_MODES = {
