@@ -1,16 +1,11 @@
+----------------------------------------------------------------------------
+-- Inspired by:                                                           --
+--   * https://github.com/Wansmer/nvim-config                             --
+--   * https://www.reddit.com/r/neovim/comments/1gghjvt/comment/luq9x27/  --
+--   * https://www.reddit.com/r/neovim/comments/1ggwaho/comment/luszaju/  --
+----------------------------------------------------------------------------
+
 local M = {}
-
---[[
-   ╭─────────────────────────────────────────────────────────────────────────╮
-   │ INSPIRED BY:                                                            │
-   │   - https://github.com/Wansmer/nvim-config                              │
-   │   - https://www.reddit.com/r/neovim/comments/1gghjvt/comment/luq9x27/   │
-   │   - https://www.reddit.com/r/neovim/comments/1ggwaho/comment/luszaju/   │
-   ╰─────────────────────────────────────────────────────────────────────────╯
-]]
-
----
----
 
 -- Ref: <https://github.com/Wansmer/nvim-config/blob/fe7a8243656807f13b13e9f129aec107735c2613/lua/utils.lua#L55>
 local function char_on_pos(pos)
