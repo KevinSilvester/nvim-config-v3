@@ -266,6 +266,7 @@ return {
    { 'NvChad/volt', lazy = true },
    {
       'NvChad/minty',
+      cmd = { 'Shades', 'Huefy' },
       -- dir = '/home/kevin/projects/minty',
       lazy = true,
    },
@@ -309,5 +310,11 @@ return {
             desc = 'Zen Mode',
          },
       },
+   },
+
+   -- image preview
+   {
+      '3rd/image.nvim',
+      config = true
    },
 }
