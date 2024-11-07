@@ -78,12 +78,27 @@ end
 
 -- stylua: ignore
 M.keys = {
-   { '<leader>lc',  require('utils.lsp').server_capabilities,                 desc = '[utils] Get Capabilities' },
-   { '<leader>ld',  vim.diagnostic.open_float,                                desc = '[builtin] Line Diagnostics' },
-   { '<leader>lf',  function() vim.lsp.buf.format({ timeout_ms = 1000 }) end, desc = '[builtin] Format File', },
-   { '<leader>li',  cmd('LspInfo'),                                           desc = '[lspconfig] LSP Info' },
-   { '<leader>lr',  vim.lsp.buf.rename,                                       desc = '[builtin] Rename' },
-   { '<leader>lar', vim.lsp.codelens.run,                                     desc = '[builtin] Run CodeLens Action' },
+   { '<leader>lc', require('utils.lsp').server_capabilities,                               desc = '[utils] Get Capabilities' },
+   { '<leader>ld', vim.diagnostic.open_float,                                              desc = '[builtin] Line Diagnostics' },
+   { '<leader>lf', function() vim.lsp.buf.format({ async = true, timeout_ms = 1000 }) end, desc = '[builtin] Format File',     mode = { 'n' } },
+   {
+      '<leader>lf',
+      function()
+         vim.lsp.buf.format({
+            async = true,
+            timeout_ms = 1000,
+            range = {
+               ['start'] = vim.api.nvim_buf_get_mark(0, '<'),
+               ['end'] = vim.api.nvim_buf_get_mark(0, '>')
+            }
+         })
+      end,
+      desc = '[builtin] Format File',
+      mode = { 'v' }
+   },
+   { '<leader>li',  cmd('LspInfo'),       desc = '[lspconfig] LSP Info' },
+   { '<leader>lr',  vim.lsp.buf.rename,   desc = '[builtin] Rename' },
+   { '<leader>lar', vim.lsp.codelens.run, desc = '[builtin] Run CodeLens Action' },
 }
 
 return M
