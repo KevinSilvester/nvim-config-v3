@@ -106,6 +106,11 @@ function Lazy:__setup()
       lockfile = self.lockfile,
       -- spec = { { 'LazyVim/LazyVim', import = 'lazyvim.plugins' } },
       spec = self.spec,
+      rocks = {
+         hererocks = true,
+         root = ufs.path_join(PATH.data, 'lazy-rocks'),
+         server = 'https://nvim-neorocks.github.io/rocks-binaries/',
+      },
       defaults = {
          lazy = true,
          version = false,
