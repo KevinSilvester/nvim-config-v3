@@ -32,3 +32,23 @@ services:
     stdin_open: true
     tty: true
     command: /bin/bash
+
+  wansmer:
+    build:
+      context: .
+      dockerfile: ./docker/wansmer.Dockerfile
+    container_name: wanmer 
+    init: true
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+    
+  nvchad:
+    build:
+      context: .
+      dockerfile: ./docker/nvchad.Dockerfile
+    container_name: nvchad 
+    init: true
+    stdin_open: true
+    tty: true
+    command: /bin/bash
