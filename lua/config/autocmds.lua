@@ -104,15 +104,17 @@ vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
 -- Autocmd to close nvim if nvim-tree is the last buffer
 -- ref: https://github.com/nvim-tree/nvim-tree.lua/wiki/Auto-Close#ppwwyyxx
 vim.api.nvim_create_autocmd('QuitPre', {
-   group = augroup('nvim-tree-quit'),
-   desc = 'Autoclose if nvim-tree is last window',
+   group = augroup('neo-tree-quit'),
+   desc = 'Autoclose if neo-tree is last window',
    callback = function()
       local invalid_win = {}
       local wins = vim.api.nvim_list_wins()
 
       for _, w in ipairs(wins) do
-         local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(w))
-         if bufname:match('NvimTree_') ~= nil or bufname == '' then
+         local bufnr = vim.api.nvim_win_get_buf(w)
+         local bufname = vim.api.nvim_buf_get_name(bufnr)
+         local bufft = vim.bo[bufnr].ft
+         if bufname == '' or (bufft == 'neo-tree' or bufft == 'NvimTree') then
             table.insert(invalid_win, w)
          end
       end
@@ -122,21 +124,5 @@ vim.api.nvim_create_autocmd('QuitPre', {
             vim.api.nvim_win_close(w, true)
          end
       end
-   end,
-})
-
--- ref: https://github.com/nvim-tree/nvim-tree.lua/wiki/Open-At-Startup#open-for-directories-and-change-neovims-directory
-vim.api.nvim_create_autocmd('VimEnter', {
-   group = augroup('nvim-tree-open'),
-   desc = 'Open nvim-tree if path is directory',
-   callback = function(data)
-      local directory = vim.fn.isdirectory(data.file) == 1
-      if not directory then
-         return
-      end
-      vim.cmd.cd(data.file)
-      xpcall(require('nvim-tree.api').tree.open, function()
-         log:error('config.autocmd', 'Plugin `nvim-tree` not found')
-      end)
    end,
 })
