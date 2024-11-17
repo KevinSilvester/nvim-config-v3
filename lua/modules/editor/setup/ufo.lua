@@ -31,18 +31,18 @@ end
 
 M.opts = {
    ---@diagnostic disable-next-line: unused-local
-   -- provider_selector = function(bufnr, filetype, buftype)
-   --    return { 'treesitter', 'indent' }
-   -- end,
+   provider_selector = function(bufnr, filetype, buftype)
+      return { 'treesitter', 'indent' }
+   end,
    fold_virt_text_handler = handler,
 }
 
 -- stylua: ignore
 M.keys = {
    { 'zR', function() require('ufo').openAllFolds() end,         desc = '[ufo] Open all folds' },
+   { 'zM', function() require('ufo').closeAllFolds() end,        desc = '[ufo] Close all folds' },
    { 'zr', function() require('ufo').openFoldsExceptKinds() end, desc = '[ufo] Openfolds except kinds' },
    { 'zm', function() require('ufo').closeFoldsWith() end,       desc = '[ufo] Close fold' },
-   { 'zR', function() require('ufo').closeAllFolds() end,        desc = '[ufo] Close all folds' },
    {
       '[f',
       function()
