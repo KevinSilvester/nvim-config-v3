@@ -68,7 +68,7 @@ end
 --                         neovide options                            --
 ------------------------------------------------------------------------
 if vim.g.neovide then
-   vim.g.neovide_refresh_rate = 60
+   vim.g.neovide_refresh_rate = 165
    vim.g.neovide_transparancey = 1
    vim.g.neovide_fullscreen = false
    vim.g.neovide_remember_window_size = true
