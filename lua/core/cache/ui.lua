@@ -299,6 +299,7 @@ function Ui:__set_keymaps()
 
    -- Expand/Collapse buffer
    self.popup:map('n', 'l', expand_collapse_buffer(true), { noremap = true, silent = true })
+   self.popup:map('n', '<cr>', expand_collapse_buffer(true), { noremap = true, silent = true })
    self.popup:map('n', 'h', expand_collapse_buffer(false), { noremap = true, silent = true })
 
    -- Expand/Collapse all
@@ -384,6 +385,7 @@ function Ui:__set_keymaps()
          'Keybindings:',
          '',
          '  <esc> or q: Close',
+         '  <cr>: Expand',
          '  l: Expand',
          '  L: Expand all',
          '  h: Collapse',
