@@ -48,7 +48,7 @@ M.config = function(_, opts)
       })
    end
    opts.server = {
-      cmd = { '/home/kevin/.cargo/bin/rust-analyzer' },
+      cmd = { 'rust-analyzer' },
       on_attach = require('modules.cmp_lsp.lsp.setup').on_attach,
       capabilities = require('modules.cmp_lsp.lsp.setup').capabilities,
       standalone = false,
