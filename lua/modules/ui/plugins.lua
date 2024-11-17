@@ -25,6 +25,12 @@ return {
    { 'olivercederborg/poimandres.nvim', event = 'VeryLazy' },
    { 'comfysage/evergarden', event = 'VeryLazy' },
    { 'ellisonleao/gruvbox.nvim', event = 'VeryLazy' },
+   {
+      'neanias/everforest-nvim',
+      name = 'everforest',
+      opts = { background = 'hard', ui_contrast = 'high' },
+      event = 'VeryLazy',
+   },
 
    -- file icons
    {
@@ -47,12 +53,13 @@ return {
       'xiyaowong/transparent.nvim',
       lazy = false,
       cmd = { 'TransparentEnable', 'TransparentDisable', 'TransparentToggle' },
-      enabled = function()
-         return vim.env.TERM_PROGRAM == 'WezTerm' or not vim.g.neovide
-      end,
       config = function()
          require('transparent').setup({})
-         vim.cmd('TransparentEnable')
+         if vim.env.TERM_PROGRAM == 'WezTerm' and not vim.g.neovide then
+            vim.cmd('TransparentEnable')
+         else
+            vim.cmd('TransparentDisable')
+         end
       end,
    },
 
@@ -102,7 +109,7 @@ return {
    {
       'luukvbaal/statuscol.nvim',
       config = require('modules.ui.setup.statuscol').config,
-      event = 'BufEnter'
+      event = 'BufEnter',
    },
 
    -- notifications
@@ -198,12 +205,14 @@ return {
    {
       'nvim-neo-tree/neo-tree.nvim',
       enabled = true,
+      cmd = 'Neotree',
+      lazy = true,
       branch = 'v3.x',
       dependencies = {
          'nvim-lua/plenary.nvim',
          'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
          'MunifTanjim/nui.nvim',
-         -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+         "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
       },
       opts = require('modules.ui.setup.neo-tree').opts,
       config = require('modules.ui.setup.neo-tree').config,
