@@ -76,6 +76,7 @@ local function get_num_wraps(args)
       local line = vim.fn.getline(args.lnum)
       local line_length = vim.fn.strdisplaywidth(line)
 
+      ---@diagnostic disable-next-line: redundant-return-value
       return math.floor(line_length / bufferwidth)
    end)
 
@@ -108,12 +109,13 @@ local function lnumfunc(args)
    local v_hl = visual_hl(args)
 
    if vim.wo.wrap then
-      local wrapped_lines = get_num_wraps(args)
       if args.virtnum > 0 and (vim.wo.number or vim.wo.relativenumber) then
-         if args.virtnum == wrapped_lines then
+         if args.virtnum == get_num_wraps(args) then
+            -- return '%=' .. v_hl .. '└'
             return '%=' .. v_hl .. '╰'
          else
-            return '%=' .. v_hl .. '├'
+            -- return '%=' .. v_hl .. '├'
+            return '%=' .. v_hl .. '│'
          end
       end
    end
