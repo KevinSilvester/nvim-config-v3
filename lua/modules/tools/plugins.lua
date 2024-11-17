@@ -263,16 +263,21 @@ return {
    },
 
    -- colour picker
-   { 'NvChad/volt', lazy = true },
+   { 'nvzone/volt', lazy = true },
    {
-      'NvChad/minty',
+      'nvzone/minty',
       cmd = { 'Shades', 'Huefy' },
-      -- dir = '/home/kevin/projects/minty',
       lazy = true,
    },
 
    -- show keys
-   { 'NvChad/showkeys', cmd = { 'ShowkeysToggle' }, opts = { position = 'top-center' } },
+   { 'nvzone/showkeys', cmd = { 'ShowkeysToggle' }, opts = { position = 'top-center' } },
+
+   -- timer
+   { 'nvzone/timerly', cmd = 'TimerlyToggle' },
+
+   -- fancy menu
+   { 'nvzone/menu', lazy = true },
 
    -- misc
    {
