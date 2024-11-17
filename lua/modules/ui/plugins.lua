@@ -212,7 +212,7 @@ return {
          'nvim-lua/plenary.nvim',
          'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
          'MunifTanjim/nui.nvim',
-         "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+         --[[ '3rd/image.nvim', ]] -- Optional image support in preview window: See `# Preview Mode` for more information
       },
       opts = require('modules.ui.setup.neo-tree').opts,
       config = require('modules.ui.setup.neo-tree').config,

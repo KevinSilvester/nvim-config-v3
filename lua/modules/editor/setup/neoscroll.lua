@@ -56,7 +56,7 @@ M.config = function(_, opts)
          function()
             neoscroll.scroll(-1, { duration = 100, move_cursor = false })
          end,
-         m.opts(m.noremap, m.silent, '[neoscroll] Scroll up one line (no cursor movement)')
+         m.opts(m.noremap, m.silent, '[neoscroll] Scroll up one line (no cursor movement)'),
       },
       {
          '<C-e>',
