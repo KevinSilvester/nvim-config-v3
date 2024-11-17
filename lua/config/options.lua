@@ -110,8 +110,8 @@ vim.opt.linebreak = true
 vim.opt.foldcolumn = '1'
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldmethod = "indent"
+-- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- handled by nvim-ufo
 vim.opt.foldenable = true
 vim.opt.equalalways = false
 vim.opt.display = 'lastline'
@@ -144,9 +144,12 @@ vim.opt.fillchars = {
    foldclose = '',
    foldsep = ' ', -- or '│' to use bar for show fold area
 }
-vim.opt.guicursor = 'n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor'
+vim.opt.guicursor =
+    'n-v-c:block-blinkwait175-blinkon175-blinkoff175,' ..
+    'i-ci-ve:ver25-blinkwait175-blinkon175-blinkoff175,' ..
+    'r-cr-o:hor20-Cursor,' .. 'sm:block-blinkwait175-blinkon175-blinkoff175'
 vim.opt.cmdwinheight = 5
--- vim.opt.showbreak = ' '
+-- vim.opt.showbreak = '↳ '
 vim.opt.listchars = 'tab:»·,nbsp:+,trail:·,extends:→,precedes:←'
 vim.opt.pumblend = 10
 vim.opt.winblend = 10
