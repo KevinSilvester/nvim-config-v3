@@ -315,6 +315,7 @@ return {
    -- image preview
    {
       '3rd/image.nvim',
-      config = true
+      config = true,
+      enabled = not HOST.is_win,
    },
 }
