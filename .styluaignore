@@ -1,3 +1,4 @@
 lua/config/options.lua
 lua/config/globals.lua
+lua/config/keymaps.lua
 lua/core/lua_globals.lua
