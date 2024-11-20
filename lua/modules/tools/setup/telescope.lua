@@ -113,7 +113,7 @@ M.keys = {
    -- git
    { '<leader>gcb', cmd('Telescope git_branch'),                    desc = '[telescope] Checkout Branch' },
    { '<leader>gcc', cmd('Telescope git_commits'),                   desc = '[telescope] Checkout Commit' },
-   { '<leader>go',  cmd('Telescope git_status'),                    desc = '[telescope] Open Changed File' },
+   { '<leader>go',  cmd('Telescope git_status'),                    desc = '[telescope] Git status' },
 
    -- search
    { '<leader>sa',  cmd('Telescope autocommands'),                  desc = '[telescope] Auto Commands' },
