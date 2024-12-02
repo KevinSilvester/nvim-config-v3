@@ -1,3 +1,4 @@
+local m = require('core.mapper')
 local i = require('modules.ui.icons')
 local M = {}
 
@@ -14,14 +15,7 @@ M.opts = {
    enable_diagnostics = true,
    open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' }, -- when opening files, do not use windows containing these filetypes or buftypes
    sort_case_insensitive = false, -- used when sorting files and directories in the tree
-   sort_function = nil, -- use a custom function for sorting files and directories in the tree
-   -- sort_function = function (a,b)
-   --       if a.type == b.type then
-   --           return a.path > b.path
-   --       else
-   --           return a.type > b.type
-   --       end
-   --   end , -- this sorts files and directories descendantly
+   -- sort_function = nil, -- use a custom function for sorting files and directories in the tree
    default_component_configs = {
       container = {
          enable_character_fade = true,
@@ -29,34 +23,19 @@ M.opts = {
       indent = {
          indent_size = 2,
          padding = 1, -- extra padding on left hand side
-         -- indent guides
          with_markers = true,
-         -- indent_marker = '├',
-         -- last_indent_marker = '╰',
          highlight = 'NeoTreeIndentMarker',
          with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
          expander_collapsed = '',
          expander_expanded = '',
-         expander_highlight = 'NeoTreeExpander',
       },
       icon = {
          folder_closed = i.fs.DirClosed,
          folder_open = i.fs.DirOpen,
          folder_empty = i.fs.DirEmptyClosed,
-         provider = function(icon, node, _state) -- default icon provider utilizes nvim-web-devicons if available
-            if node.type == 'file' or node.type == 'terminal' then
-               local success, web_devicons = pcall(require, 'nvim-web-devicons')
-               local name = node.type == 'terminal' and 'terminal' or node.name
-               if success then
-                  local devicon, hl = web_devicons.get_icon(name)
-                  icon.text = devicon or icon.text
-                  icon.highlight = hl or icon.highlight
-               end
-            end
-         end,
          -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
          -- then these will never be used.
-         default = '*',
+         default = '',
          highlight = 'NeoTreeFileIcon',
       },
       modified = {
@@ -70,38 +49,16 @@ M.opts = {
       },
       git_status = {
          symbols = {
-            -- Change type
-            added = i.git.Add, -- or "✚", but this is redundant info if you use git_status_colors on the name
-            modified = i.git.Mod, -- or "", but this is redundant info if you use git_status_colors on the name
-            deleted = i.git.Remove, -- this can only be used in the git_status source
-            renamed = i.git.Rename, -- this can only be used in the git_status source
-            -- Status type
+            added = i.git.Add,
+            modified = i.git.Mod,
+            deleted = i.git.Remove,
+            renamed = i.git.Rename,
             untracked = i.git.Untracked,
             ignored = i.git.Ignore,
             unstaged = i.git.Unstaged,
             staged = i.git.Staged,
             conflict = i.git.Unmerged,
          },
-      },
-      -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
-      file_size = {
-         enabled = true,
-         required_width = 64, -- min width of window required to show this column
-      },
-      type = {
-         enabled = true,
-         required_width = 122, -- min width of window required to show this column
-      },
-      last_modified = {
-         enabled = true,
-         required_width = 88, -- min width of window required to show this column
-      },
-      created = {
-         enabled = true,
-         required_width = 110, -- min width of window required to show this column
-      },
-      symlink_target = {
-         enabled = true,
       },
    },
    -- A list of functions, each representing a global custom command
@@ -122,23 +79,18 @@ M.opts = {
          },
          ['<2-LeftMouse>'] = 'open',
          ['<cr>'] = 'open',
+         ['l'] = 'open',
+         ['h'] = 'close_node',
+         ['<S-l>'] = 'expand_all_nodes',
+         ['<S-h>'] = 'close_all_nodes',
          ['<esc>'] = 'cancel', -- close preview or floating neo-tree window
          ['P'] = { 'toggle_preview', config = { use_float = true, use_image_nvim = true } },
-         -- Read `# Preview Mode` for more information
-         ['l'] = 'focus_preview',
+         ['t'] = 'focus_preview',
          ['S'] = 'open_split',
          ['s'] = 'open_vsplit',
-         -- ["S"] = "split_with_window_picker",
-         -- ["s"] = "vsplit_with_window_picker",
-         ['t'] = 'open_tabnew',
-         -- ["<cr>"] = "open_drop",
-         -- ["t"] = "open_tab_drop",
+         -- ['t'] = 'open_tabnew',
          ['w'] = 'open_with_window_picker',
-         --["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
-         ['C'] = 'close_node',
-         -- ['C'] = 'close_all_subnodes',
          ['z'] = 'close_all_nodes',
-         --["Z"] = "expand_all_nodes",
          ['a'] = {
             'add',
             -- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
@@ -171,26 +123,6 @@ M.opts = {
    },
    nesting_rules = {},
    filesystem = {
-      -- renderers = {
-      --    directory = {
-      --       {
-      --          'indent',
-      --          with_markers = true,
-      --          indent_marker = '│',
-      --          last_indent_marker = '╰',
-      --          indent_size = 2,
-      --       },
-      --    },
-      --    file = {
-      --       {
-      --          'indent',
-      --          with_markers = true,
-      --          indent_marker = '├',
-      --          last_indent_marker = '└',
-      --          indent_size = 2,
-      --       },
-      --    },
-      -- },
       filtered_items = {
          visible = false, -- when true, they will just be displayed differently than normal items
          hide_dotfiles = false,
@@ -221,7 +153,7 @@ M.opts = {
          },
       },
       follow_current_file = {
-         enabled = false, -- This will find and focus the file in the active buffer every time
+         enabled = true, -- This will find and focus the file in the active buffer every time
          --               -- the current file is changed while the tree is open.
          leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
       },
@@ -254,18 +186,20 @@ M.opts = {
             ['on'] = { 'order_by_name', nowait = false },
             ['os'] = { 'order_by_size', nowait = false },
             ['ot'] = { 'order_by_type', nowait = false },
-            -- ['<key>'] = function(state) ... end,
          },
          fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
             ['<down>'] = 'move_cursor_down',
             ['<C-n>'] = 'move_cursor_down',
             ['<up>'] = 'move_cursor_up',
             ['<C-p>'] = 'move_cursor_up',
-            -- ['<key>'] = function(state, scroll_padding) ... end,
          },
       },
-
-      commands = {}, -- Add a custom command or override a global one using the same function name
+      commands = {
+         toggle_hidden = function(state)
+            state.filtered_items.visible = not state.filtered_items.visible
+            require('neo-tree.sources.filesystem.commands').refresh(state)
+         end,
+      },
    },
    buffers = {
       follow_current_file = {
@@ -331,7 +265,8 @@ M.config = function(_, opts)
    opts.renderers.file[1] = {
       'indent',
       with_markers = true,
-      indent_marker = '├',
+      indent_marker = '│',
+      -- indent_marker = '├',
       last_indent_marker = '╰',
       indent_size = 2,
    }
@@ -366,5 +301,16 @@ M.config = function(_, opts)
       end,
    })
 end
+
+M.keys = {
+   { '<leader>ne', m.cmd('Neotree toggle'), desc = 'Toggle Neotree' },
+   {
+      '<leader>nr',
+      function()
+         require('neo-tree.sources.git_status').refresh()
+      end,
+      desc = 'Refresh Neotree',
+   },
+}
 
 return M

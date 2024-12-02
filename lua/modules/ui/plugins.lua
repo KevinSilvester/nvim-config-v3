@@ -200,7 +200,7 @@ return {
       dependencies = 'nvim-tree/nvim-web-devicons',
       opts = require('modules.ui.setup.nvim-tree').opts,
       config = require('modules.ui.setup.nvim-tree').config,
-      keys = require('modules.ui.setup.nvim-tree').keys,
+      -- keys = require('modules.ui.setup.nvim-tree').keys,
    },
    {
       'nvim-neo-tree/neo-tree.nvim',
@@ -216,6 +216,7 @@ return {
       },
       opts = require('modules.ui.setup.neo-tree').opts,
       config = require('modules.ui.setup.neo-tree').config,
+      keys = require('modules.ui.setup.neo-tree').keys,
    },
 
    -- cure-border
