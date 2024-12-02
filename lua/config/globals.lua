@@ -4,6 +4,8 @@ local fn = vim.fn
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.g.editorconfig = true
+
 
 ------------------------------------------------------------------------
 --                     PATH environment variable                      --

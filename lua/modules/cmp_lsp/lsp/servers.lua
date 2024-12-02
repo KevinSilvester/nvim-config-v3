@@ -14,7 +14,8 @@ M.custom = {
    emmet_ls = {
       capabilities = M.default.capabilities,
       on_attach = M.default.on_attach,
-      cmd = require('modules.cmp_lsp.lsp.servers.emmet_ls').cmd,
+      -- cmd = require('modules.cmp_lsp.lsp.servers.emmet_ls').cmd,
+      init_options = require('modules.cmp_lsp.lsp.servers.emmet_ls').init_options,
       filetypes = require('modules.cmp_lsp.lsp.servers.emmet_ls').filetypes,
    },
    eslint = {
