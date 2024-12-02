@@ -36,7 +36,7 @@ M.opts = {
          -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
          -- then these will never be used.
          default = '',
-         highlight = 'NeoTreeFileIcon',
+         highlight = 'NeoTreeDimText' --[[ 'NeoTreeFileIcon' ]],
       },
       modified = {
          symbol = '[+]',
@@ -64,7 +64,22 @@ M.opts = {
    -- A list of functions, each representing a global custom command
    -- that will be available in all sources (if not overridden in `opts[source_name].commands`)
    -- see `:h neo-tree-custom-commands-global`
-   commands = {},
+   commands = {
+      trash = function(state)
+         local inputs = require('neo-tree.ui.inputs')
+         local path = state.tree:get_node().path
+         local msg = 'Are you sure you want to delete ' .. path
+         inputs.confirm(msg, function(confirmed)
+            if not confirmed then
+               return
+            end
+
+            local cmd = HOST.is_win and 'pwsh -c Remove-ItemSafely' or 'trash-put'
+            vim.fn.system({ cmd, path })
+            require('neo-tree.sources.manager').refresh(state.name)
+         end)
+      end,
+   },
    window = {
       position = 'left',
       width = 40,
@@ -81,8 +96,8 @@ M.opts = {
          ['<cr>'] = 'open',
          ['l'] = 'open',
          ['h'] = 'close_node',
-         ['<S-l>'] = 'expand_all_nodes',
-         ['<S-h>'] = 'close_all_nodes',
+         -- ['<S-l>'] = 'expand_all_nodes',
+         -- ['<S-h>'] = 'close_all_nodes',
          ['<esc>'] = 'cancel', -- close preview or floating neo-tree window
          ['P'] = { 'toggle_preview', config = { use_float = true, use_image_nvim = true } },
          ['t'] = 'focus_preview',
@@ -93,25 +108,18 @@ M.opts = {
          ['z'] = 'close_all_nodes',
          ['a'] = {
             'add',
-            -- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
-            -- some commands may take optional config options, see `:h neo-tree-mappings` for details
             config = {
                show_path = 'none', -- "none", "relative", "absolute"
             },
          },
          ['A'] = 'add_directory', -- also accepts the optional config.show_path option like "add". this also supports BASH style brace expansion.
-         ['d'] = 'delete',
+         ['d'] = 'trash',
+         ['D'] = 'delete',
          ['r'] = 'rename',
          ['y'] = 'copy_to_clipboard',
          ['x'] = 'cut_to_clipboard',
          ['p'] = 'paste_from_clipboard',
          ['c'] = 'copy', -- takes text input for destination, also accepts the optional config.show_path option like "add":
-         -- ["c"] = {
-         --  "copy",
-         --  config = {
-         --    show_path = "none" -- "none", "relative", "absolute"
-         --  }
-         --}
          ['m'] = 'move', -- takes text input for destination, also accepts the optional config.show_path option like "add".
          ['q'] = 'close_window',
          ['R'] = 'refresh',
@@ -129,14 +137,14 @@ M.opts = {
          hide_gitignored = false,
          hide_hidden = false, -- only works on Windows for hidden files/directories
          hide_by_name = {
-            --"node_modules"
+            'node_modules',
+            '.git',
+            'target',
+            '.idea',
+            '.expo',
          },
          hide_by_pattern = { -- uses glob style patterns
-            'node_modules',
             '\\.cache',
-            '^.git$',
-            'target',
-            '\\.idea',
          },
          always_show = { -- remains visible even if other settings would normally hide it
             --".gitignored",
@@ -171,7 +179,7 @@ M.opts = {
             ['.'] = 'set_root',
             ['H'] = 'toggle_hidden',
             ['/'] = 'fuzzy_finder',
-            ['D'] = 'fuzzy_finder_directory',
+            ['?'] = 'fuzzy_finder_directory',
             ['#'] = 'fuzzy_sorter', -- fuzzy sorting using the fzy algorithm
             -- ["D"] = "fuzzy_sorter_directory",
             ['f'] = 'filter_on_submit',
