@@ -176,7 +176,7 @@ M.on_very_lazy = function(func)
    })
 end
 
----Run shell command with callbackc for stderr|stdout
+---Run shell command with callback for stderr|stdout
 ---@param command string
 ---@param args table<integer|string>
 ---@param on_exit fun(code: number, signal: number)|nil
