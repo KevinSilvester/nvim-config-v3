@@ -1,5 +1,6 @@
 local m = require('core.mapper')
 local i = require('modules.ui.icons')
+local ufn = require('utils.fn')
 local M = {}
 
 M.opts = {
@@ -74,9 +75,13 @@ M.opts = {
                return
             end
 
-            local cmd = HOST.is_win and 'pwsh -c Remove-ItemSafely' or 'trash-put'
-            vim.fn.system({ cmd, path })
-            require('neo-tree.sources.manager').refresh(state.name)
+            ufn.spawn('pwsh', { '-c', 'Remove-ItemSafely', path }, function(code, _signal)
+               if code ~= 0 then
+                  log:error('neo-tree ~ trash', 'Failed to trash the file/directory!')
+                  return
+               end
+               require('neo-tree.sources.manager').refresh(state)
+            end)
          end)
       end,
    },
