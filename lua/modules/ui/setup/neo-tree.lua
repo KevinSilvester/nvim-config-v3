@@ -62,9 +62,6 @@ M.opts = {
          },
       },
    },
-   -- A list of functions, each representing a global custom command
-   -- that will be available in all sources (if not overridden in `opts[source_name].commands`)
-   -- see `:h neo-tree-custom-commands-global`
    commands = {
       trash = function(state)
          local inputs = require('neo-tree.ui.inputs')
@@ -75,9 +72,24 @@ M.opts = {
                return
             end
 
-            ufn.spawn('pwsh', { '-c', 'Remove-ItemSafely', path }, function(code, _signal)
+            -- luacheck: ignore 311
+            local trash = {}
+
+            if HOST.is_win then
+               trash = {
+                  cmd = 'pwsh.exe',
+                  args = { '-c', 'Remove-ItemSafely', path },
+               }
+            else
+               trash = {
+                  cmd = 'trash-put',
+                  args = { path },
+               }
+            end
+
+            ufn.spawn(trash.cmd, trash.args, function(code, _signal)
                if code ~= 0 then
-                  log:error('neo-tree ~ trash', 'Failed to trash the file/directory!')
+                  log:error('neo-tree ~ trash', 'Failed to trash the file/directory: ' .. path)
                   return
                end
                require('neo-tree.sources.manager').refresh(state)
